@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obelisk by TechXodia — All your knowledge, assembled.</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Obelisk by TechXodia — All your knowledge, assembled. Enterprise knowledge base and autonomous AI customer support copilot featuring hybrid RAG vector search, autonomous tool calls, grounded source citations, and human handoff workflows.">
+  <meta name="keywords" content="TechXodia, Obelisk, Obelisk by TechXodia, AI Agent, RAG, Autonomous Copilot, Knowledge Base, Vector Search, Enterprise AI">
+  <meta name="author" content="TechXodia AI Labs">
+  
+  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Application Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/studio.css">
+  
+  <!-- Browser Tab Favicon Icons -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+</head>
+<body>
+
+  <div class="nexus-app-container">
+    
+    <!-- 1. Top Navigation & System Health Header -->
+    <header class="nexus-header" role="banner">
+      <div class="header-brand">
+        <div class="brand-logo-wrap" title="Obelisk by TechXodia — All your knowledge, assembled.">
+          <img src="assets/obelisk-logo.png" alt="Obelisk Logo" class="brand-logo-img" />
+        </div>
+        <div class="brand-text-col">
+          <div class="brand-title-row">
+            <h1 class="brand-title"><span class="brand-title-o">Ø</span><span class="brand-title-rest">BELISK</span></h1>
+            <span class="brand-by-agency">
+              by <strong class="brand-tech">Tech</strong><strong class="brand-xodia">Xodia</strong>
+            </span>
+          </div>
+          <span class="brand-tagline-text">KNOWLEDGE, ASSEMBLED.</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <!-- Live Agent Health Monitor -->
+        <div class="agent-health-pill" title="Live Agent Telemetry Ping">
+          <span class="health-pulse-dot" id="agent-status-ping"></span>
+          <span>Agent Live • 120ms Latency</span>
+        </div>
+
+        <!-- Active Knowledge Base Selector Dropdown -->
+        <div class="header-kb-selector">
+          <label for="kb-select" class="kb-select-label">Active KB:</label>
+          <select id="kb-select" class="kb-select-dropdown" aria-label="Select active enterprise knowledge base">
+            <option value="saas-cloud">☁️ SaaS Cloud Platform (TechXodia Engine)</option>
+            <option value="fintech-billing">💳 Fintech & Billing API (FinCore Pay)</option>
+            <option value="ecommerce-logistics">📦 E-Commerce Logistics (OmniShip Global)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Live LLM / Simulation Status Badge -->
+        <div id="llm-mode-badge" class="status-badge sim-active" title="Inference Engine Mode">
+          <span class="badge-dot-sim"></span>
+          <span>Smart Offline Engine</span>
+        </div>
+
+        <!-- Audio Chimes Toggle -->
+        <button id="btn-sound-toggle" class="btn-icon-only active" title="Toggle Audio Sound Chimes" aria-label="Toggle Sound">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+        </button>
+
+        <!-- Quick Ingest Button -->
+        <button id="btn-ingest-header" class="btn-header btn-glass" title="Ingest New Document into Vector Index">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Ingest Source</span>
+        </button>
+
+        <!-- Admin Knowledge Studio Toggle Button -->
+        <button id="btn-admin-studio" class="btn-header btn-primary" title="Open Enterprise Telemetry & Settings">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+          </svg>
+          <span>Admin Studio</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. Dual-Panel Interactive Workspace -->
+    <main class="nexus-workspace" role="main">
+      
+      <!-- Left Panel: Knowledge Grounding & Documents -->
+      <aside class="nexus-panel-left" aria-label="Knowledge Base Context and Documents">
+        
+        <!-- Active KB Context Card -->
+        <div class="kb-overview-card">
+          <div class="kb-overview-top">
+            <span id="kb-display-badge" class="kb-badge">SaaS Cloud Platform</span>
+            <span class="text-xs text-slate-400 font-mono">v4.2-RAG</span>
+          </div>
+          <h2 id="kb-display-title" class="kb-overview-title">TechXodia Cloud Engine</h2>
+          <p id="kb-display-desc" class="kb-overview-desc">Autonomous microservices, edge computing, distributed caching, and zero-trust IAM architecture.</p>
+        </div>
+
+        <!-- Vector Memory Stats Ribbon -->
+        <div class="vector-stats-ribbon">
+          <div class="v-stat-box">
+            <span id="stat-docs-count" class="v-stat-val">4</span>
+            <span class="v-stat-lbl">Indexed Docs</span>
+          </div>
+          <div class="v-stat-box">
+            <span id="stat-vectors-count" class="v-stat-val">1,420</span>
+            <span class="v-stat-lbl">Vector Chunks</span>
+          </div>
+          <div class="v-stat-box">
+            <span id="stat-dimensions" class="v-stat-val">1536-dim</span>
+            <span class="v-stat-lbl">Embeddings</span>
+          </div>
+        </div>
+
+        <!-- Document Search Input -->
+        <div class="doc-search-bar">
+          <svg class="doc-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="doc-search-input" class="doc-search-input" placeholder="Filter indexed knowledge files..." aria-label="Search indexed documents">
+        </div>
+
+        <!-- Document Index List Container -->
+        <div id="doc-list-container" class="doc-list-section" aria-live="polite">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Left Panel Action Footer -->
+        <div class="panel-left-footer">
+          <button id="btn-ingest-trigger" class="btn-ingest-trigger">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>+ Ingest Knowledge Source</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Right Panel: The AI Copilot Chat Interface -->
+      <section class="nexus-panel-right" aria-label="Autonomous Support Copilot Chat">
+        
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="chat-header-title">
+            <span>Autonomous Copilot Chat</span>
+            <span class="grounding-tag">🛡️ Strict RAG Grounding Active</span>
+          </div>
+          <div class="chat-header-actions">
+            <button id="btn-clear-chat" class="btn-chat-action" title="Clear message history">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Clear</span>
+            </button>
+            <button id="btn-export-chat" class="btn-chat-action" title="Export conversation log as JSON">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Export</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Message Thread -->
+        <div id="chat-messages" class="chat-messages-container" aria-live="polite">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Chat Input & Quick Prompts Dock -->
+        <div class="chat-input-dock">
+          <!-- Dynamic Quick Prompt Pills -->
+          <div id="quick-prompts-container" class="quick-prompts-tray" aria-label="Suggested Prompts">
+            <!-- Populated dynamically via JS based on active KB -->
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-wrapper">
+            <textarea 
+              id="chat-input" 
+              class="chat-textarea" 
+              rows="1" 
+              placeholder="Ask Obelisk anything grounded in the active knowledge base..." 
+              aria-label="Ask Obelisk copilot message"
+              maxlength="1000"
+            ></textarea>
+            <div class="chat-input-actions">
+              <span id="char-counter" class="char-counter">0/1000</span>
+              <button id="btn-send" class="btn-send-message" aria-label="Send message" title="Send (Enter)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 1: Ingest Document / Vector Pipeline Simulator
+       ========================================================================== -->
+  <div id="ingest-modal" class="nexus-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ingest-modal-title">
+    <div class="nexus-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="text-xl">📚</span>
+          <h3 id="ingest-modal-title" class="modal-title">Ingest Enterprise Knowledge Source</h3>
+        </div>
+        <button id="btn-modal-close" class="btn-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="form-ingest" onsubmit="return false;">
+        <div class="modal-body">
+          <p class="text-xs text-slate-400">
+            Simulate document ingestion pipeline: Recursive character token chunking, 1536-dimensional dense embedding generation via <code class="text-cyan-400 font-mono">text-embedding-3-small</code>, and vector memory index upsertion.
+          </p>
+
+          <div class="form-field-row">
+            <div class="form-field-group">
+              <label for="ingest-title">Document Title</label>
+              <input type="text" id="ingest-title" placeholder="e.g. SOC2 Type II Audit & HIPAA Policy" required value="Enterprise Data Security & Encryption Standards">
+            </div>
+            <div class="form-field-group">
+              <label for="ingest-filename">Virtual File Name</label>
+              <input type="text" id="ingest-filename" placeholder="e.g. security_soc2_v2.md" required value="security_soc2_v2.md">
+            </div>
+          </div>
+
+          <div class="form-field-group">
+            <label for="ingest-category">Category / Domain Tag</label>
+            <input type="text" id="ingest-category" placeholder="e.g. Compliance & Cryptography" required value="Compliance & Cryptography">
+          </div>
+
+          <div class="form-field-group">
+            <label for="ingest-content">Raw Knowledge Text / Markdown</label>
+            <textarea id="ingest-content" rows="6" placeholder="Paste or type knowledge content to vectorize..." required>TechXodia Cloud enforces AES-256 encryption at rest across all Spanner, CockroachDB, and Redis clusters with automated AWS KMS envelope key rotation every 90 days. All data in transit is encrypted using TLS 1.3 with forward secrecy. Production tenant data is strictly isolated within dedicated Kubernetes namespaces, and zero persistent customer telemetry is retained in model inference memory.</textarea>
+          </div>
+
+          <!-- Ingestion Pipeline Animated Progress Box -->
+          <div id="ingest-progress-container" class="ingest-progress-box" style="display: none;">
+            <div class="progress-track">
+              <div id="ingest-progress-bar" class="progress-fill" style="width: 0%;"></div>
+            </div>
+            <div id="ingest-status-text" class="progress-status-text">Initializing pipeline...</div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="btn-cancel-ingest" class="btn-header btn-glass">Cancel</button>
+          <button type="submit" id="btn-start-ingest" class="btn-header btn-primary">
+            <span>Vectorize & Ingest Document</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: Vector Chunk Inspector
+       ========================================================================== -->
+  <div id="chunk-modal" class="nexus-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="chunk-modal-title">
+    <div class="nexus-modal-card" style="width: 680px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="text-xl">🔍</span>
+          <h3 id="chunk-modal-title" class="modal-title">Vector Chunk Inspector</h3>
+        </div>
+        <button id="btn-chunk-modal-close" class="btn-modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <div id="chunk-modal-body" class="modal-body">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 3: Admin Knowledge Studio & Telemetry Analytics
+       ========================================================================== -->
+  <div id="studio-modal" class="nexus-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="studio-modal-title">
+    <div class="nexus-modal-card studio-modal-card">
+      
+      <!-- Studio Header -->
+      <div class="studio-header">
+        <div class="studio-title-col">
+          <span class="studio-badge">Admin Studio</span>
+          <h3 id="studio-modal-title" class="text-base font-bold text-white">Obelisk Knowledge Operations & Telemetry</h3>
+        </div>
+        <button id="btn-studio-modal-close" class="btn-modal-close" aria-label="Close studio">&times;</button>
+      </div>
+
+      <!-- Studio Tab Navigation -->
+      <nav class="studio-tab-nav" role="tablist">
+        <button class="studio-tab-btn active" data-tab="telemetry" role="tab" aria-selected="true">
+          <span>📊 Telemetry & KPIs</span>
+        </button>
+        <button class="studio-tab-btn" data-tab="leads" role="tab" aria-selected="false">
+          <span>👤 Captured Leads Queue</span>
+        </button>
+        <button class="studio-tab-btn" data-tab="vectors" role="tab" aria-selected="false">
+          <span>🧠 Vector Memory</span>
+        </button>
+        <button class="studio-tab-btn" data-tab="llm" role="tab" aria-selected="false">
+          <span>⚙️ Live LLM API Keys</span>
+        </button>
+        <button class="studio-tab-btn" data-tab="architecture" role="tab" aria-selected="false">
+          <span>🚀 TechXodia Architecture</span>
+        </button>
+      </nav>
+
+      <!-- Studio Body Content -->
+      <div class="studio-body">
+
+        <!-- TAB 1: Telemetry & KPIs -->
+        <div id="tab-pane-telemetry" class="studio-tab-pane active" role="tabpanel">
+          <!-- 4 KPI Cards -->
+          <div class="studio-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-card-top">
+                <span class="kpi-label">Total Inquiries</span>
+                <span class="kpi-trend positive">+18.4% WoW</span>
+              </div>
+              <span class="kpi-value">14,892</span>
+              <span class="kpi-subtext">Automated copilot conversations</span>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-top">
+                <span class="kpi-label">Autonomous Resolution</span>
+                <span class="kpi-trend positive">Target: >90%</span>
+              </div>
+              <span class="kpi-value">94.8%</span>
+              <span class="kpi-subtext">Zero human escalation required</span>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-top">
+                <span class="kpi-label">Average Latency</span>
+                <span class="kpi-trend neutral">P95: 410ms</span>
+              </div>
+              <span class="kpi-value">218ms</span>
+              <span class="kpi-subtext">Edge vector search & synthesis</span>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-card-top">
+                <span class="kpi-label">CSAT Grounding</span>
+                <span class="kpi-trend positive">★ 4.92 / 5.0</span>
+              </div>
+              <span class="kpi-value">99.4%</span>
+              <span class="kpi-subtext">Grounded citation precision score</span>
+            </div>
+          </div>
+
+          <!-- Analytics Charts -->
+          <div class="studio-charts-grid">
+            <div class="studio-chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">24-Hour Inquiry Volume vs Autonomous Resolution</span>
+                <div class="chart-legend">
+                  <span class="legend-item"><span class="legend-dot" style="background: #06B6D4;"></span> Total Volume</span>
+                  <span class="legend-item"><span class="legend-dot" style="background: #10B981;"></span> Autonomous Resolved</span>
+                </div>
+              </div>
+              <div id="studio-chart-traffic">
+                <!-- Injected via SVG in studio.js -->
+              </div>
+            </div>
+
+            <div class="studio-chart-card">
+              <div class="chart-card-header">
+                <span class="chart-card-title">Intent Distribution</span>
+              </div>
+              <div id="studio-intent-breakdown">
+                <!-- Injected via studio.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Captured Enterprise Leads -->
+        <div id="tab-pane-leads" class="studio-tab-pane" role="tabpanel">
+          <div class="mb-4">
+            <h4 class="text-sm font-bold text-white mb-1">Human Handoff & Enterprise Lead Capture Queue</h4>
+            <p class="text-xs text-slate-400">Real-time tickets generated autonomously when users request enterprise contracts, custom pricing, or human specialists.</p>
+          </div>
+          <div id="studio-leads-container">
+            <!-- Injected via studio.js -->
+          </div>
+        </div>
+
+        <!-- TAB 3: Vector Memory Status -->
+        <div id="tab-pane-vectors" class="studio-tab-pane" role="tabpanel">
+          <div class="vector-memory-grid">
+            <div class="vector-memory-card">
+              <h4 class="text-sm font-bold text-white mb-2">Active Vector Index Topology</h4>
+              <p class="text-xs text-slate-400 mb-3">Pinecone & Milvus Serverless HNSW Distributed Clusters</p>
+              
+              <div class="vector-spec-list">
+                <div class="vector-spec-item">
+                  <span class="spec-name">Index Name</span>
+                  <span class="spec-val">obelisk-prod-enterprise-v1</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Embedding Model</span>
+                  <span class="spec-val">text-embedding-3-small</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Vector Dimensions</span>
+                  <span class="spec-val">1,536 dimensions</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Distance Metric</span>
+                  <span class="spec-val">Cosine Similarity</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Total Vectors Active</span>
+                  <span class="spec-val">4,990 vectors</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Index Memory Footprint</span>
+                  <span class="spec-val">38.4 MB (In-Memory HNSW)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="vector-memory-card">
+              <h4 class="text-sm font-bold text-white mb-2">Chunking & RAG Retrieval Policy</h4>
+              <p class="text-xs text-slate-400 mb-3">Multi-stage retrieval and anti-hallucination guardrails</p>
+
+              <div class="vector-spec-list">
+                <div class="vector-spec-item">
+                  <span class="spec-name">Chunk Window Size</span>
+                  <span class="spec-val">512 Tokens (Dynamic)</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Chunk Overlap</span>
+                  <span class="spec-val">64 Tokens</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Top-K Candidate Extraction</span>
+                  <span class="spec-val">3 Chunks</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Cross-Encoder Reranker</span>
+                  <span class="spec-val">Active (Threshold > 0.65)</span>
+                </div>
+                <div class="vector-spec-item">
+                  <span class="spec-name">Zero-Hallucination Guardrail</span>
+                  <span class="spec-val">Enforced (Refusal < 0.38)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Real LLM API Key Settings -->
+        <div id="tab-pane-llm" class="studio-tab-pane" role="tabpanel">
+          <div class="settings-panel-box">
+            <div>
+              <h4 class="text-sm font-bold text-white mb-1">Inference Engine & LLM Provider</h4>
+              <p class="text-xs text-slate-400">By default, Obelisk operates in <strong>Smart Simulation Mode</strong> for instant zero-config showcases. You can optionally plug in your own API key to stream responses live from OpenAI or Google Gemini.</p>
+            </div>
+
+            <!-- Provider Radio Cards -->
+            <div class="provider-options-grid">
+              <label class="provider-radio-card">
+                <input type="radio" name="llm-provider" value="simulated" checked>
+                <span class="provider-card-icon">⚡</span>
+                <span class="provider-card-title">Smart Simulation</span>
+                <span class="provider-card-desc">Default showroom engine. Zero API key required, realistic instant RAG.</span>
+              </label>
+
+              <label class="provider-radio-card">
+                <input type="radio" name="llm-provider" value="openai">
+                <span class="provider-card-icon">🧠</span>
+                <span class="provider-card-title">OpenAI API</span>
+                <span class="provider-card-desc">Stream live from GPT-4o or GPT-4o-mini with real RAG grounding.</span>
+              </label>
+
+              <label class="provider-radio-card">
+                <input type="radio" name="llm-provider" value="gemini">
+                <span class="provider-card-icon">✨</span>
+                <span class="provider-card-title">Google Gemini</span>
+                <span class="provider-card-desc">Stream live from Gemini 1.5 Flash or Pro via Google AI Studio API.</span>
+              </label>
+            </div>
+
+            <!-- API Key & Model Settings -->
+            <div class="form-field-group">
+              <label for="llm-api-key">API Key (Stored locally in your browser)</label>
+              <input type="password" id="llm-api-key" placeholder="Offline smart simulation (no key needed)" disabled>
+            </div>
+
+            <div class="form-field-row">
+              <div class="form-field-group">
+                <label for="llm-model-select">Target Model</label>
+                <select id="llm-model-select">
+                  <option value="gpt-4o-mini">gpt-4o-mini (Recommended - Low Latency)</option>
+                  <option value="gpt-4o">gpt-4o (High Reasoning)</option>
+                  <option value="gemini-1.5-flash">gemini-1.5-flash (Fast Google)</option>
+                  <option value="gemini-1.5-pro">gemini-1.5-pro (Deep Multimodal)</option>
+                </select>
+              </div>
+
+              <div class="form-field-group">
+                <label for="llm-temperature">
+                  Grounding Temperature: <span id="temp-value-display" class="font-mono text-cyan-400">0.3</span>
+                </label>
+                <input type="range" id="llm-temperature" min="0.0" max="1.0" step="0.05" value="0.3">
+              </div>
+            </div>
+
+            <div class="settings-test-row">
+              <button id="btn-save-llm-config" class="btn-header btn-primary">Save Configuration</button>
+              <button id="btn-test-llm-conn" class="btn-header btn-glass">Test Connection</button>
+              <div id="llm-test-result"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: Techxodia Architecture Showcase -->
+        <div id="tab-pane-architecture" class="studio-tab-pane" role="tabpanel">
+          <div class="showcase-agency-hero">
+            <div class="showcase-brand-banner">
+              <img src="assets/obelisk-brand-hero.png" alt="Obelisk by TechXodia Brand Identity" class="brand-hero-banner-img" />
+            </div>
+            <h3 class="showcase-agency-title">TechXodia AI Labs — Enterprise Agent Architecture</h3>
+            <p class="showcase-agency-text">
+              TechXodia designs and deploys custom applied AI agents, enterprise Retrieval-Augmented Generation (RAG) platforms, and autonomous customer support copilots tailored for high-compliance SaaS, Fintech, and Global Logistics organizations.
+            </p>
+
+            <div class="showcase-architecture-flow">
+              <div class="flow-step-box">
+                <span class="flow-step-num">STAGE 01</span>
+                <span class="flow-step-title">Ingestion & Embeddings</span>
+                <p class="flow-step-desc">Automated parsers ingest PDFs, Markdown, and APIs into recursive tokenized chunks vectorised via OpenAI or Cohere.</p>
+              </div>
+
+              <div class="flow-step-box">
+                <span class="flow-step-num">STAGE 02</span>
+                <span class="flow-step-title">Hybrid Vector Search</span>
+                <p class="flow-step-desc">Combines dense vector embeddings with BM25 lexical keyword matching and Cross-Encoder re-ranking for 99.4% precision.</p>
+              </div>
+
+              <div class="flow-step-box">
+                <span class="flow-step-num">STAGE 03</span>
+                <span class="flow-step-title">Autonomous Tool Calling</span>
+                <p class="flow-step-desc">Agents execute deterministic tools (billing calculators, health queries, CRM ticket dispatches) before answering.</p>
+              </div>
+
+              <div class="flow-step-box">
+                <span class="flow-step-num">STAGE 04</span>
+                <span class="flow-step-title">Human-in-the-Loop</span>
+                <p class="flow-step-desc">Graceful escalation captures leads and routes high-value inquiries directly into Salesforce, HubSpot, or Zendesk.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Modular Script -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

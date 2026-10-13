@@ -1,0 +1,36 @@
+# Environment variables & secrets (CRITICAL: Never commit credentials)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+
+# Vercel deployment cache & credentials
+.vercel
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs & temporary files
+*.log
+scratch/
+tmp/
+temp/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor caches
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.gemini/

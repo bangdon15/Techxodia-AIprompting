@@ -1,0 +1,21 @@
+{
+  "name": "obelisk-by-techxodia",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Obelisk by TechXodia — All your knowledge, assembled. Enterprise Knowledge Base & Autonomous Support Copilot",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "dev": "npx serve -s . -l 3000"
+  },
+  "keywords": [
+    "techxodia",
+    "obelisk",
+    "rag",
+    "ai-agent",
+    "enterprise-copilot",
+    "vector-search"
+  ],
+  "author": "TechXodia AI Labs",
+  "license": "MIT"
+}
